@@ -74,7 +74,7 @@ function scanRFID() {
         document.getElementById("result").innerHTML = `
             <div class="alert alert-${color}">
 
-                <h4>${icon} ${message}</h4>
+                <h4>${message}</h4>
 
                 ${data.employee ? `
                 <hr>

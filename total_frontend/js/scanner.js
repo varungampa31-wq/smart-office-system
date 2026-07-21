@@ -46,25 +46,35 @@ function scanRFID() {
         const now = new Date().toLocaleString();
 
         let color = "secondary";
-        let icon = "ℹ️";
 
         if (data.status === "success") {
             color = "success";
-            icon = "✅";
         }
         else if (data.status === "warning") {
             color = "warning";
-            icon = "⚠️";
         }
         else if (data.status === "error") {
             color = "danger";
-            icon = "❌";
+        }
+
+        // The backend only sends "message" for warning/error responses.
+        // Successful check-in/check-out replies carry "action" instead,
+        // so build a message from that when "message" is missing.
+        let message = data.message;
+        if (!message) {
+            if (data.action === "CHECK_IN") {
+                message = "Checked in successfully";
+            } else if (data.action === "CHECK_OUT") {
+                message = "Checked out successfully";
+            } else {
+                message = "Scan processed";
+            }
         }
 
         document.getElementById("result").innerHTML = `
             <div class="alert alert-${color}">
 
-                <h4>${icon} ${data.message}</h4>
+                <h4>${icon} ${message}</h4>
 
                 ${data.employee ? `
                 <hr>

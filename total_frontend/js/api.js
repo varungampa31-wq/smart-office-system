@@ -1,1 +1,1 @@
-const BASE_URL="http://127.0.0.1:8000/api";
+const BASE_URL="http://54.82.114.183:8000/api";

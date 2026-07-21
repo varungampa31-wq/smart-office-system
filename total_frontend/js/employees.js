@@ -4,39 +4,43 @@ if (!token) {
     window.location.href = "index.html";
 }
 
-fetch(BASE_URL + "/employees/", {
-    headers: {
-        "Authorization": "Bearer " + token
-    }
-})
-.then(response => response.json())
-.then(data => {
+function loadEmployees() {
 
-    let html = "";
+    fetch(BASE_URL + "/employees/", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
 
-    data.forEach(employee => {
+        let html = "";
 
-        html += `
-        <tr>
+        data.forEach(employee => {
 
-            <td>${employee.employee_id}</td>
+            html += `
+            <tr>
 
-            <td>${employee.first_name} ${employee.last_name}</td>
+                <td>${employee.employee_id}</td>
 
-            <td>${employee.email}</td>
+                <td>${employee.first_name} ${employee.last_name}</td>
 
-            <td>${employee.department}</td>
+                <td>${employee.email}</td>
 
-            <td>${employee.is_active ? "Active" : "Inactive"}</td>
+                <td>${employee.department}</td>
 
-        </tr>
-        `;
+                <td>${employee.is_active ? "Active" : "Inactive"}</td>
+
+            </tr>
+            `;
+
+        });
+
+        document.getElementById("employeeTable").innerHTML = html;
 
     });
 
-    document.getElementById("employeeTable").innerHTML = html;
-
-});
+}
 
 function logout() {
 
@@ -45,3 +49,72 @@ function logout() {
     window.location.href = "index.html";
 
 }
+
+// ==========================
+// Add employee
+// ==========================
+
+document.getElementById("addEmployeeForm").addEventListener("submit", function (e) {
+
+    e.preventDefault();
+
+    const errorBox = document.getElementById("addEmployeeError");
+    errorBox.classList.add("d-none");
+    errorBox.innerHTML = "";
+
+    const payload = {
+        employee_id: document.getElementById("employeeId").value.trim(),
+        first_name: document.getElementById("firstName").value.trim(),
+        last_name: document.getElementById("lastName").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        department: document.getElementById("department").value,
+        rfid_tag: document.getElementById("rfidTag").value.trim()
+    };
+
+    fetch(BASE_URL + "/employees/", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(async response => {
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw data;
+        }
+
+        return data;
+
+    })
+    .then(() => {
+
+        document.getElementById("addEmployeeForm").reset();
+
+        const modalEl = document.getElementById("addEmployeeModal");
+        bootstrap.Modal.getInstance(modalEl).hide();
+
+        loadEmployees();
+
+    })
+    .catch(errors => {
+
+        const messages = Object.entries(errors)
+            .map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(", ") : msgs}`)
+            .join("<br>");
+
+        errorBox.innerHTML = messages || "Something went wrong. Please check the form and try again.";
+        errorBox.classList.remove("d-none");
+
+    });
+
+});
+
+// ==========================
+// Initial load
+// ==========================
+
+loadEmployees();

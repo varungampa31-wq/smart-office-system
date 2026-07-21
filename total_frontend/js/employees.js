@@ -31,12 +31,48 @@ function loadEmployees() {
 
                 <td>${employee.is_active ? "Active" : "Inactive"}</td>
 
+                <td>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteEmployee(${employee.id}, '${employee.first_name} ${employee.last_name}')">
+                        Delete
+                    </button>
+                </td>
+
             </tr>
             `;
 
         });
 
         document.getElementById("employeeTable").innerHTML = html;
+
+    });
+
+}
+
+function deleteEmployee(id, name) {
+
+    if (!confirm(`Delete ${name}? This cannot be undone.`)) {
+        return;
+    }
+
+    fetch(BASE_URL + "/employees/" + id + "/", {
+        method: "DELETE",
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(response => {
+
+        if (!response.ok && response.status !== 204) {
+            throw new Error("Delete failed");
+        }
+
+        loadEmployees();
+
+    })
+    .catch(error => {
+
+        console.error("Delete employee error:", error);
+        alert("Could not delete this employee. Check the console for details.");
 
     });
 
@@ -58,6 +94,8 @@ document.getElementById("addEmployeeForm").addEventListener("submit", function (
 
     e.preventDefault();
 
+    console.log("Add employee form submitted");
+
     const errorBox = document.getElementById("addEmployeeError");
     errorBox.classList.add("d-none");
     errorBox.innerHTML = "";
@@ -71,6 +109,8 @@ document.getElementById("addEmployeeForm").addEventListener("submit", function (
         rfid_tag: document.getElementById("rfidTag").value.trim()
     };
 
+    console.log("Payload:", payload);
+
     fetch(BASE_URL + "/employees/", {
         method: "POST",
         headers: {
@@ -80,6 +120,8 @@ document.getElementById("addEmployeeForm").addEventListener("submit", function (
         body: JSON.stringify(payload)
     })
     .then(async response => {
+
+        console.log("Response status:", response.status);
 
         const data = await response.json();
 
@@ -101,6 +143,8 @@ document.getElementById("addEmployeeForm").addEventListener("submit", function (
 
     })
     .catch(errors => {
+
+        console.error("Add employee error:", errors);
 
         const messages = Object.entries(errors)
             .map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(", ") : msgs}`)

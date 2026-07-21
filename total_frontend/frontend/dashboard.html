@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Office Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-dark bg-primary fixed-top">
+
+        <div class="container-fluid">
+
+            <span class="navbar-brand fs-3">
+
+                🏢 Smart Office System
+
+            </span>
+
+            <div>
+
+                <span class="text-white me-3">
+
+                    Welcome Admin
+
+                </span>
+
+                <button class="btn btn-light" onclick="logout()">
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <a href="dashboard.html">🏠 Dashboard</a>
+
+        <a href="employees.html">👨 Employees</a>
+
+        <a href="attendance.html">📅 Attendance</a>
+
+        <a href="alerts.html">🚨 Alerts</a>
+
+        <a href="scanner.html">📡 RFID Scanner</a>
+
+    </div>
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+
+        <h2 class="mb-4">
+
+            Dashboard
+
+        </h2>
+
+        <!-- Summary Cards -->
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+
+                <div class="card">
+
+                    <div class="card-body text-center">
+
+                        <h5>Total Employees</h5>
+
+                        <h1 id="totalEmployees">0</h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card">
+
+                    <div class="card-body text-center">
+
+                        <h5>Present Today</h5>
+
+                        <h1 id="presentToday">0</h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card">
+
+                    <div class="card-body text-center">
+
+                        <h5>Inside Office</h5>
+
+                        <h1 id="insideOffice">0</h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card">
+
+                    <div class="card-body text-center">
+
+                        <h5>Alerts Today</h5>
+
+                        <h1 id="alertsToday">0</h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Second Row -->
+
+        <div class="row g-4 mt-1">
+
+            <div class="col-md-12">
+
+                <div class="card">
+
+                    <div class="card-body text-center">
+
+                        <h5>Sensor Events Today</h5>
+
+                        <h1 id="sensorEvents">0</h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Tables -->
+
+        <div class="row mt-4">
+
+            <div class="col-lg-6">
+
+                <div class="card">
+
+                    <div class="card-header bg-success text-white">
+
+                        Recent Sensor Events
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-hover">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Employee</th>
+
+                                    <th>Event</th>
+
+                                    <th>Time</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="sensorTable">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="card">
+
+                    <div class="card-header bg-danger text-white">
+
+                        Recent Alerts
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-hover">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Employee</th>
+
+                                    <th>Alert</th>
+
+                                    <th>Severity</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="alertTable">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+
+</body>
+
+</html>

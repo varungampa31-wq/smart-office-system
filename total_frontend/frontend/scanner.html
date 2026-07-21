@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>RFID Scanner</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-primary fixed-top">
+
+<div class="container-fluid">
+
+<span class="navbar-brand fs-3">
+
+🏢 Smart Office System
+
+</span>
+
+<div>
+
+<span class="text-white me-3">
+
+RFID Scanner
+
+</span>
+
+<button class="btn btn-light" onclick="logout()">
+
+Logout
+
+</button>
+
+</div>
+
+</div>
+
+</nav>
+
+<div class="sidebar">
+
+<a href="dashboard.html">🏠 Dashboard</a>
+
+<a href="employees.html">👨 Employees</a>
+
+<a href="attendance.html">📅 Attendance</a>
+
+<a href="alerts.html">🚨 Alerts</a>
+
+<a href="scanner.html" class="bg-primary">📡 RFID Scanner</a>
+
+</div>
+
+<div class="main-content">
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card">
+
+<div class="card-body">
+
+<h2 class="text-center mb-4">
+
+RFID Scanner
+
+</h2>
+
+<div class="mb-3">
+
+<label class="form-label">
+
+RFID Card Number
+
+</label>
+
+<input
+type="text"
+class="form-control form-control-lg"
+id="rfidTag"
+placeholder="Enter RFID Tag">
+
+</div>
+
+<div class="d-grid">
+
+<button
+class="btn btn-success btn-lg"
+onclick="scanRFID()">
+
+Scan Card
+
+</button>
+
+</div>
+
+<hr>
+
+<div id="result">
+
+<h4 class="text-center text-muted">
+
+Waiting for RFID Scan...
+
+</h4>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="../js/api.js"></script>
+
+<script src="../js/scanner.js"></script>
+
+</body>
+
+</html>
